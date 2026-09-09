@@ -13,7 +13,7 @@ function Header() {
     const { pathname } = useLocation();
 
     return (
-        <header className="sticky top-0 z-50 px-15 glass border-b border-border/40">
+        <header className="sticky top-0 z-50 px-15 backdrop-blur-2xl border-b border-border">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-18 items-center justify-between py-4">
                     <Link to="/" className="flex items-center gap-2">
