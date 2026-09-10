@@ -22,6 +22,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
+        
+        <footer className="py-6 text-center text-xs text-muted-foreground">
+        © {new Date().getFullYear()} RacketAI.
+        </footer>
       </Router>
     </>
   )

@@ -62,7 +62,6 @@ function Home() {
     return (
         <div className="">
             <section className="mx-25 mt-20 mb-25">
-                <div className="">
                     <div className="flex flex-col gap-5 text-center items-center">
                         <h1 className="text-5xl font-bold w-210 leading-13">Land Your Next Job With an AI-Powered Application Assistant</h1>
                         <p className="text-lg text-muted-foreground w-130">
@@ -73,11 +72,10 @@ function Home() {
                         <Link
                             // to="/signup"
                             aria-label="Analyse my CV"
-                            className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground">Analyse my CV
+                            className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground">
+                                Analyse my CV
                         </Link>
                     </div>
-                </div>
-
             </section>
 
             <section className="">
@@ -107,9 +105,7 @@ function Home() {
             </section>
 
             <section className="px-30 py-15">
-                <div>
-                    <h1 className="text-3xl font-bold">How it works</h1>
-                </div>
+                <h1 className="text-3xl font-bold">How it works</h1>
 
                 <div className="mt-10 grid gap-8 md:grid-cols-4">
                     {steps.map((step, index) => (
@@ -119,6 +115,20 @@ function Home() {
                             <p className="pt-2 text-sm text-muted-foreground">{step.description}</p>
                         </div>
                     ))}
+                </div>
+            </section>
+
+            <section className="px-30 py-15 bg-destructive-foreground border-1 border-border">
+                <div className="flex flex-col gap-5 text-center items-center">
+                    <h1 className="text-3xl font-bold">Built for honest, effective applications</h1>
+                    <p className="w-180 text-md text-muted-foreground">RacketAI never invents degrees, certifications, employers or achievements. It highlights what your CV already supports, shows where the job asks for more, and suggests truthful ways to close the gap.</p>
+                
+                    <Link
+                        // to="/signup"
+                        aria-label="Analyse my CV"
+                        className="font-medium w-35 mt-2 px-3 py-2 border-2 border-secondary-foreground">
+                            Analyse my CV
+                    </Link>
                 </div>
             </section>
         </div>
