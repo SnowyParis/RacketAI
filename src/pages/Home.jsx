@@ -34,6 +34,29 @@ const features = [
     },
 ];
 
+const steps = [
+    {
+        number: "01",
+        title: "Upload Your CV",
+        description: "PDF or DOCX, up to 10 MB. Nothing is shared with employers."
+    },
+    {
+        number: "02",
+        title: "Paste the Job Description",
+        description: "Any advert, from any job board or careers page."
+    },
+    {
+        number: "03",
+        title: "AI Analyses Your Match",
+        description: "Skills, keywords, experience and qualifications, side by side."
+    },
+    {
+        number: "04",
+        title: "Improve, Apply & Track",
+        description: "Tailor your CV, write the letter, prepare and follow every stage."
+    },
+];
+
 
 function Home() {
     return (
@@ -81,7 +104,22 @@ function Home() {
                         </div>
                     ))}
                 </div>
+            </section>
 
+            <section className="px-30 py-15">
+                <div>
+                    <h1 className="text-3xl font-bold">How it works</h1>
+                </div>
+
+                <div className="mt-10 grid gap-8 md:grid-cols-4">
+                    {steps.map((step, index) => (
+                        <div key={index} className="flex flex-col border-t-2 border-border">
+                            <span className="pt-4 text-md text-primary font-medium">{step.number}</span>
+                            <span className="text-md text-foreground font-medium">{step.title}</span>
+                            <p className="pt-2 text-sm text-muted-foreground">{step.description}</p>
+                        </div>
+                    ))}
+                </div>
             </section>
         </div>
     );
