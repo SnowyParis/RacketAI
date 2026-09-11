@@ -1,3 +1,4 @@
+@import "react-circular-progressbar/dist/styles.css";
 @import "tailwindcss";
 @source "../src";
 
@@ -129,4 +130,21 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
+}
+
+.CircularProgressbar-path {
+  @apply stroke-emerald-500;
+  transition: stroke-dashoffset 0.5s ease 0s; /* Keeps smooth animation */
+}
+
+.CircularProgressbar-trail {
+  @apply stroke-neutral-200;
+}
+
+.CircularProgressbar-text {
+  @apply fill-black font-semibold;
+}
+
+.CircularProgressbar-background {
+  @apply fill-neutral-50;
 }

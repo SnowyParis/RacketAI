@@ -1,4 +1,6 @@
 import { PencilSparkles, BriefcaseBusiness, MessageCircleQuestionMark, SearchCheck, FileSearch, Target } from "lucide-react";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
 
 const features = [
@@ -62,27 +64,38 @@ function Home() {
     return (
         <div className="">
             <section className="mx-25 mt-20 mb-25">
-                    <div className="flex flex-col gap-5 text-center items-center">
-                        <h1 className="text-5xl font-bold w-210 leading-13">Land Your Next Job With an AI-Powered Application Assistant</h1>
-                        <p className="text-lg text-muted-foreground w-130">
-                            Analyse your CV against any job description, discover skill gaps, generate tailored applications, prepare for interviews,
-                            and track every application in one place.
-                        </p>
+                <div className="flex flex-col gap-5 text-center items-center">
+                    <h1 className="text-5xl font-bold w-210 leading-13">Land Your Next Job With an AI-Powered Application Assistant</h1>
+                    <p className="text-lg text-muted-foreground w-130">
+                        Analyse your CV against any job description, discover skill gaps, generate tailored applications, prepare for interviews,
+                        and track every application in one place.
+                    </p>
 
-                        <Link
-                            // to="/signup"
-                            aria-label="Analyse my CV"
-                            className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground">
-                                Analyse my CV
-                        </Link>
-                    </div>
-            </section>
-
-            <section className="">
-                <div className="flex mb-20 items-center justify-center">
-                    <div className="relative  p-6 w-150 h-100 bg-card shadow-md border-1 border-border">
+                    <Link
+                        // to="/signup"
+                        aria-label="Analyse my CV"
+                        className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground">
+                            Analyse my CV
+                    </Link>
+                </div>
+            
+                <div className="flex my-20 items-center justify-center">
+                    <div className="relative p-6 w-150 h-100 bg-card shadow-md border-1 border-border">
                         <h3 className="text-muted-foreground font-medium">Frontend Developer — TechCorp</h3>
                         <div className="absolute top-7 right-7 px-2 py-1 w-17 rounded-lg text-sm text-primary bg-primary/20">Analysis</div>
+
+                        <div className="flex gap-5 items-center pt-5">
+                            <div className="w-30 h-30 font-medium text-md">
+                                <CircularProgressbar value={82} text={"82%"}
+                                    classes={{text: "fill-foreground [text-anchor:middle] [dominant-baseline:central]", path: "stroke-primary transition-all duration-500 ease-in-out", trail: "stroke-background"}}
+                                    styles={buildStyles({ strokeLinecap: 'round', textSize: '20px', })}/>
+                            </div>
+
+                            <div className="flex flex-col">
+                                <h3 className="font-medium">Strong Match</h3>
+                                <p className="text-md text-muted-foreground">Your CV matches most core requirements for this role.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
