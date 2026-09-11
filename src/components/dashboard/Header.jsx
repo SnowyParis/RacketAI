@@ -11,7 +11,7 @@ const nav = [
 function Header() {
     const [open, setOpen] = useState(false);
     return (
-        <header className="sticky top-0 z-50 px-15 backdrop-blur-2xl border-b border-border">
+        <header className="sticky top-0 z-50 px-7 sm:px-15 backdrop-blur-2xl border-b border-border">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-18 items-center justify-between py-4">
                     <Link to="/" className="flex items-center gap-2">
@@ -22,9 +22,8 @@ function Header() {
                         </span>
                     </Link>
 
-                    <nav className="hidden lg:flex items-center gap-8">
+                    <nav className="hidden min-[860px]:flex items-center gap-8">
                         {nav.map((item) => {
-
                             return (
                                 <Link
                                     key={item.to}
@@ -41,7 +40,7 @@ function Header() {
                         <Link
                             to="/login"
                             aria-label="Login"
-                            className="px-3 py-2 font-medium text-muted-foreground hover:bg-muted-foreground/10 transition"
+                            className="hidden min-[590px]:block px-3 py-2 font-medium text-muted-foreground hover:bg-muted-foreground/10 transition"
                         >
                             Log In
                         </Link>
@@ -49,7 +48,7 @@ function Header() {
                         <Link
                             to="/signup"
                             aria-label="Signup"
-                            className="ml-1 px-3 py-2 font-medium border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition"
+                            className="hidden min-[590px]:block ml-1 px-3 py-2 font-medium border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition"
                         >
                             Get Started
                         </Link>
@@ -57,9 +56,9 @@ function Header() {
                         <button
                             aria-label="Menu"
                             onClick={() => setOpen((prev) => !prev)}
-                            className="lg:hidden grid h-10 w-10 place-items-center rounded-full text-foreground/70 hover:bg-muted-foreground/20"
+                            className="min-[860px]:hidden ml-7 grid h-10 w-10 place-items-center text-foreground/70 hover:bg-muted-foreground/10"
                         >
-                            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                         </button>
                     </div>
                 </div>
@@ -71,7 +70,7 @@ function Header() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="lg:hidden overflow-hidden border-t border-border/40 bg-background/95"
+                    className="min-[860px]:hidden overflow-hidden border-t border-border/40 bg-background/95"
                 >
                     <div className="flex flex-col p-4 gap-1">
                         {nav.map((item) => (
@@ -79,11 +78,29 @@ function Header() {
                                 key={item.to}
                                 to={item.to}
                                 onClick={() => setOpen(false)}
-                                className="rounded-lg px-3 py-2.5 text-md font-medium hover:bg-secondary/60"
+                                className="px-3 py-2.5 text-md font-medium hover:bg-muted-foreground/10"
                             >
                                 {item.label}
                             </Link>
                         ))}
+
+                        <div className="min-[590px]:hidden max-[380px]:flex-col flex  pt-3 gap-1 border-t-1 border-muted-foreground/20">
+                            <Link
+                                to="/login"
+                                aria-label="Login"
+                                className="px-3 py-2 max-[380px]:w-29 font-medium text-muted-foreground hover:bg-muted-foreground/10 transition"
+                            >
+                                Log In
+                            </Link>
+
+                            <Link
+                                to="/signup"
+                                aria-label="Signup"
+                                className="ml-1 px-3 py-2 max-[380px]:w-29 font-medium border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition"
+                            >
+                                Get Started
+                            </Link>
+                        </div>
                     </div>
                 </div>
             )}
