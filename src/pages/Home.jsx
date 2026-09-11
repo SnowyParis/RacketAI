@@ -78,7 +78,7 @@ function Home() {
                     <Link
                         // to="/signup"
                         aria-label="Analyse my CV"
-                        className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground">
+                        className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
                             Analyse my CV
                     </Link>
                 </div>
@@ -86,11 +86,14 @@ function Home() {
                 <div className="flex my-20 items-center justify-center">
                     <div className="relative p-6 w-150 h-115 bg-card shadow-md border-1 border-border">
                         <h3 className="text-muted-foreground font-medium">Frontend Developer — TechCorp</h3>
-                        <div className="absolute top-7 right-7 px-2 py-1 w-17 rounded-lg text-sm text-primary bg-primary/20">Analysis</div>
+                        <div className="absolute top-7 right-7 px-2 py-1 w-17 text-sm text-primary bg-primary-soft">Analysis</div>
 
                         <div className="flex gap-5 items-center pt-5">
                             <div className="w-25 h-25 font-medium text-md">
-                                <CircularProgressbar value={82} text={"82%"}
+                                <CircularProgressbar 
+                                    value={82} 
+                                    text={"82%"}
+                                    strokeWidth={11}
                                     classes={{text: "fill-foreground [text-anchor:middle] [dominant-baseline:central]", path: "stroke-primary transition-all duration-500 ease-in-out", trail: "stroke-background"}}
                                     styles={buildStyles({ strokeLinecap: 'round', textSize: '20px', })}/>
                             </div>
@@ -174,7 +177,7 @@ function Home() {
                     <Link
                         // to="/signup"
                         aria-label="Analyse my CV"
-                        className="font-medium w-35 mt-2 px-3 py-2 border-2 border-secondary-foreground">
+                        className="font-medium w-35 mt-2 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
                             Analyse my CV
                     </Link>
                 </div>
