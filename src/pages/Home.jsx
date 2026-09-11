@@ -1,4 +1,4 @@
-import { PencilSparkles, BriefcaseBusiness, MessageCircleQuestionMark, SearchCheck, FileSearch, Target } from "lucide-react";
+import { PencilSparkles, BriefcaseBusiness, MessageCircleQuestionMark, SearchCheck, FileSearch, Target, Check, TriangleAlert } from "lucide-react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from "react-router-dom";
@@ -59,6 +59,10 @@ const steps = [
     },
 ];
 
+const matches = ["Python", "JavaScript", "SQL", "React", "Next.js", ];
+
+const missing = ["AWS", "Docker", "Node.js", ];
+
 
 function Home() {
     return (
@@ -80,21 +84,52 @@ function Home() {
                 </div>
             
                 <div className="flex my-20 items-center justify-center">
-                    <div className="relative p-6 w-150 h-100 bg-card shadow-md border-1 border-border">
+                    <div className="relative p-6 w-150 h-115 bg-card shadow-md border-1 border-border">
                         <h3 className="text-muted-foreground font-medium">Frontend Developer — TechCorp</h3>
                         <div className="absolute top-7 right-7 px-2 py-1 w-17 rounded-lg text-sm text-primary bg-primary/20">Analysis</div>
 
                         <div className="flex gap-5 items-center pt-5">
-                            <div className="w-30 h-30 font-medium text-md">
+                            <div className="w-25 h-25 font-medium text-md">
                                 <CircularProgressbar value={82} text={"82%"}
                                     classes={{text: "fill-foreground [text-anchor:middle] [dominant-baseline:central]", path: "stroke-primary transition-all duration-500 ease-in-out", trail: "stroke-background"}}
                                     styles={buildStyles({ strokeLinecap: 'round', textSize: '20px', })}/>
                             </div>
 
                             <div className="flex flex-col">
-                                <h3 className="font-medium">Strong Match</h3>
+                                <h3 className="text-md font-medium">Strong Match</h3>
                                 <p className="text-md text-muted-foreground">Your CV matches most core requirements for this role.</p>
                             </div>
+                        </div>
+
+                        <div className="pt-5">
+                            <h3 className="pt-5 pb-2 text-sm text-muted-foreground font-medium">STRONG MATCH</h3>
+                            
+                            <div className="flex gap-2">
+                                {matches.map((match, index) => (
+                                    <span key={index} className="flex gap-1 px-2 py-1 items-center text-sm text-success bg-success/10">
+                                        <Check size={15} />
+                                        {match}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="pt-5">
+                            <h3 className="pb-2 text-sm text-muted-foreground font-medium">MISSING</h3>
+                        
+                            <div className="flex gap-2">
+                                {missing.map((value, index) => (
+                                    <span key={index} className="flex gap-1 px-2 py-1 items-center text-sm text-warning bg-warning/10">
+                                        <TriangleAlert size={15} />
+                                        {value}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="mt-5 p-3 bg-muted-foreground/10">
+                            <h3 className="pb-1 text-sm text-muted-foreground font-medium">SUGGESTED IMPROVEMENT</h3>
+                            <p className="text-md">Add measurable achievements to your most recent role.</p>
                         </div>
                     </div>
                 </div>
