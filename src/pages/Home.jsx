@@ -69,8 +69,8 @@ function Home() {
         <div className="">
             <section className="mx-25 mt-20 mb-25">
                 <div className="flex flex-col gap-5 text-center items-center">
-                    <h1 className="text-5xl font-bold w-210 leading-13">Land Your Next Job With an AI-Powered Application Assistant</h1>
-                    <p className="text-lg text-muted-foreground w-130">
+                    <h1 className="mx-5 text-2xl min-[450px]:text-3xl sm:text-4xl md:text-5xl font-bold w-80 min-[450px]:w-100 min-[550px]:w-120 sm:w-150 md:w-210 leading-8 min-[450px]:leading-10 md:leading-13">Land Your Next Job With an AI-Powered Application Assistant</h1>
+                    <p className="text-md sm:text-lg text-muted-foreground w-70 min-[550px]:w-90 sm:w-100 md:w-130">
                         Analyse your CV against any job description, discover skill gaps, generate tailored applications, prepare for interviews,
                         and track every application in one place.
                     </p>
@@ -84,11 +84,11 @@ function Home() {
                 </div>
             
                 <div className="flex my-20 items-center justify-center">
-                    <div className="relative p-6 w-150 h-115 bg-card shadow-md border-1 border-border">
+                    <div className="relative p-6 w-110 min-[550px]:w-120 h-135 min-[550px]:h-120 min-[684px]:h-115 bg-card shadow-md border-1 border-border">
                         <h3 className="text-muted-foreground font-medium">Frontend Developer — TechCorp</h3>
                         <div className="absolute top-7 right-7 px-2 py-1 w-17 text-sm text-primary bg-primary-soft">Analysis</div>
 
-                        <div className="flex gap-5 items-center pt-5">
+                        <div className="flex max-[550px]:flex-col gap-5 items-center pt-5">
                             <div className="w-25 h-25 font-medium text-md">
                                 <CircularProgressbar 
                                     value={82} 
@@ -104,10 +104,10 @@ function Home() {
                             </div>
                         </div>
 
-                        <div className="pt-5">
+                        <div className="">
                             <h3 className="pt-5 pb-2 text-sm text-muted-foreground font-medium">STRONG MATCH</h3>
                             
-                            <div className="flex gap-2">
+                            <div className="flex flex-wrap gap-2">
                                 {matches.map((match, index) => (
                                     <span key={index} className="flex gap-1 px-2 py-1 items-center text-sm text-success bg-success/10">
                                         <Check size={15} />
@@ -138,15 +138,15 @@ function Home() {
                 </div>
             </section>
 
-            <section className="px-30 py-15 bg-destructive-foreground border-1 border-border">
+            <section className="px-9 sm:px-15 lg:px-30 py-15 bg-destructive-foreground border-1 border-border">
                 <div className="text-center items-center">
                     <h1 className="pb-2 text-3xl font-bold">Everything your application needs</h1>
                     <p className="text-md text-muted-foreground">One workspace for matching, improving, writing, practising and tracking.</p>
                 </div>
 
-                <div className="mt-10 grid gap-8 md:grid-cols-3">
+                <div className="max-sm:pl-20 mt-10 grid gap-8 grid-cols-1 sm:grid-cols-2 min-[880px]:grid-cols-3">
                     {features.map((feature, index) => (
-                        <div key={index} className="bg-popover border-1 border-border p-6">
+                        <div key={index} className="max-sm:w-80 bg-popover border-1 border-border p-6">
                             <feature.icon size={25} className="mb-2 text-primary bg-primary/10 w-9 h-9 p-2" />
                             <span className="text-md text-foreground font-medium">{feature.title}</span>
                             <p className="pt-2 text-sm text-muted-foreground">{feature.description}</p>
@@ -171,8 +171,8 @@ function Home() {
 
             <section className="px-30 py-15 bg-destructive-foreground border-1 border-border">
                 <div className="flex flex-col gap-5 text-center items-center">
-                    <h1 className="text-3xl font-bold">Built for honest, effective applications</h1>
-                    <p className="w-180 text-md text-muted-foreground">RacketAI never invents degrees, certifications, employers or achievements. It highlights what your CV already supports, shows where the job asks for more, and suggests truthful ways to close the gap.</p>
+                    <h1 className="text-2xl min-[560px]:text-3xl font-bold w-80 min-[470px]:w-110 md:w-150">Built for honest, effective applications</h1>
+                    <p className="w-70 min-[470px]:w-90 md:w-180 text-md text-muted-foreground">RacketAI never invents degrees, certifications, employers or achievements. It highlights what your CV already supports, shows where the job asks for more, and suggests truthful ways to close the gap.</p>
                 
                     <Link
                         // to="/signup"
