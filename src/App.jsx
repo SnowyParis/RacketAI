@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/dashboard/Header.jsx"
+import Dashboard from "./components/Dashboard.jsx";
+import Header from "./components/Header.jsx";
 import Features from "./pages/Features.jsx";
 import Signup from "./pages/Signup.jsx";
 import About from "./pages/About.jsx";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/features" element={<Features />} />
           <Route path="/works" element={<Works />} />
           <Route path="/about" element={<About />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

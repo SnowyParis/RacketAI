@@ -175,12 +175,21 @@ function Home() {
                     <h1 className="text-2xl min-[560px]:text-3xl font-bold w-80 min-[470px]:w-110 md:w-150">Built for honest, effective applications</h1>
                     <p className="w-70 min-[470px]:w-90 md:w-180 text-md text-muted-foreground">RacketAI never invents degrees, certifications, employers or achievements. It highlights what your CV already supports, shows where the job asks for more, and suggests truthful ways to close the gap.</p>
 
-                    <Link
-                        // to="/signup"
-                        aria-label="Analyse my CV"
-                        className="font-medium w-35 mt-2 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
-                        Analyse my CV
-                    </Link>
+                    <div className="flex gap-5">
+                        <Link
+                            // to="/signup"
+                            aria-label="Analyse my CV"
+                            className="font-medium w-35 mt-2 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
+                            Analyse my CV
+                        </Link>
+
+                        <Link
+                            to="/dashboard"
+                            aria-label="Analyse my CV"
+                            className="font-medium w-40 mt-2 px-3 py-2 text-muted-foreground border-2 border-muted-foreground hover:bg-muted-foreground/10 transition">
+                            Open dashboard
+                        </Link>
+                    </div>
                 </div>
             </section>
         </div>
