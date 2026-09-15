@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard.jsx";
+import AnalyseCV from "./components/AnalyseCV.jsx"
 import Header from "./components/Header.jsx";
 import Features from "./pages/Features.jsx";
 import Signup from "./pages/Signup.jsx";
@@ -21,6 +22,7 @@ function App() {
           <Route path="/works" element={<Works />} />
           <Route path="/about" element={<About />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/analyse-cv" element={<AnalyseCV />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>

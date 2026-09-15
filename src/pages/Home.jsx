@@ -76,7 +76,7 @@ function Home() {
                     </p>
 
                     <Link
-                        // to="/signup"
+                        to="/analyse-cv"
                         aria-label="Analyse my CV"
                         className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
                         Analyse my CV
@@ -177,7 +177,7 @@ function Home() {
 
                     <div className="flex gap-5">
                         <Link
-                            // to="/signup"
+                            to="/analyse-cv"
                             aria-label="Analyse my CV"
                             className="font-medium w-35 mt-2 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
                             Analyse my CV
