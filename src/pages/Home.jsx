@@ -84,7 +84,7 @@ function Home() {
                 </div>
             </section>
 
-            <section className="px-9 sm:px-15 lg:px-30 py-15 bg-destructive-foreground border-1 border-border">
+            <section className="px-9 sm:px-15 lg:px-30 py-15 bg-destructive-foreground border border-border">
                 <div className="text-center items-center">
                     <h1 className="pb-2 text-3xl font-bold">Everything your application needs</h1>
                     <p className="text-md text-muted-foreground">One workspace for matching, improving, writing, practising and tracking.</p>
@@ -92,7 +92,7 @@ function Home() {
 
                 <div className="mt-10 grid gap-8 grid-cols-1 min-[700px]:grid-cols-2 min-[880px]:grid-cols-3">
                     {features.map((feature, index) => (
-                        <div key={index} className="bg-popover border-1 border-border p-6">
+                        <div key={index} className="bg-popover border border-border p-6">
                             <feature.icon size={25} className="mb-2 text-primary bg-primary/10 w-9 h-9 p-2" />
                             <span className="text-md text-foreground font-medium">{feature.title}</span>
                             <p className="pt-2 text-sm text-muted-foreground">{feature.description}</p>
@@ -117,7 +117,7 @@ function Home() {
                 <div className="flex flex-col mt-15 mb-10 items-center justify-center">
                     <h3 className="mb-10 text-2xl font-bold">Analysis</h3>
 
-                    <div className=" p-6 w-110 h-150 min-[550px]:h-130 bg-card shadow-md border-1 border-border">
+                    <div className=" p-6 w-110 h-150 min-[550px]:h-130 bg-card shadow-md border border-border">
                         <h3 className="text-muted-foreground font-medium">Frontend Developer — TechCorp</h3>
 
                         <div className="flex max-[550px]:flex-col gap-5 pt-5">
@@ -170,7 +170,7 @@ function Home() {
                 </div>
             </section>
 
-            <section className="px-30 py-15 bg-destructive-foreground border-1 border-border">
+            <section className="px-30 py-15 bg-destructive-foreground border border-border">
                 <div className="flex flex-col gap-5 text-center items-center">
                     <h1 className="text-2xl min-[560px]:text-3xl font-bold w-80 min-[470px]:w-110 md:w-150">Built for honest, effective applications</h1>
                     <p className="w-70 min-[470px]:w-90 md:w-180 text-md text-muted-foreground">RacketAI never invents degrees, certifications, employers or achievements. It highlights what your CV already supports, shows where the job asks for more, and suggests truthful ways to close the gap.</p>

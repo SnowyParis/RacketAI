@@ -68,7 +68,6 @@ const submissions = [
 ];
 
 const thClassName = "font-medium text-[0.8rem]";
-const tdClassName = "";
 
 function Dashboard() {
 
@@ -106,7 +105,7 @@ function Dashboard() {
                             <th className={thClassName}>ACTIONS</th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                         {submissions.map((submission, index) => (
                             <tr key={index} className="text-md text-left border-b">
@@ -128,9 +127,27 @@ function Dashboard() {
             </div>
 
             <div className="p-5">
-                <h3 className="text-lg font-semibold">Recent applications</h3>
+                <h3 className="text-lg font-semibold">Recent analyses</h3>
+
+                <div className="grid gap-8 grid-cols-3 py-4">
+                    {submissions.slice(0, 3).map((submission, index) => (
+                        <div 
+                            key={index}
+                            className="flex flex-col p-3 bg-card border border-border rounded-lg"
+                        >
+                            <div className="flex justify-between">
+                                <h3 className="text-lg font-semibold">{submission.role}</h3>
+                                <span className="px-2 py-1 text-xs text-accent-foreground bg-primary-soft rounded-md">{submission.match}</span>
+                            </div>
+
+                            <span className="text-sm text-muted-foreground">{submission.company}</span>
+                            <span className="py-2 text-xs text-muted-foreground">Analysed {submission.applied}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
+        
     );
 }
 
