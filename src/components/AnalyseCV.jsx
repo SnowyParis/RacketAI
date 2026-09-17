@@ -47,7 +47,7 @@ function AnalyseCV() {
                                 <p className="text-md text-muted-foreground">PDF or DOCX, up to 10 MB.</p>
                             </div>
 
-                            <div className="flex flex-col py-10 items-center m-5 gap-5 bg-background border-2 border-dashed">
+                            <div className="flex flex-col py-15 items-center m-5 gap-5 bg-background border-2 border-dashed">
                                 <Upload size={20} className="mb-2 text-accent-foreground bg-card rounded-lg w-9 h-9 p-2" />
 
                                 <div className="text-center">
