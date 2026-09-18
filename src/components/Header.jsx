@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 const nav = [
-    { to: "/features", label: "Features" },
-    { to: "/works", label: "How It Works" },
-    { to: "/about", label: "About" },
+    { to: "/analyse-cv", label: "Analyse CV" },
+    { to: "/tailored-cv", label: "Tailored CV" },
+    { to: "/cover-letter", label: "Cover Letter" },
 ];
 
 function Header() {
