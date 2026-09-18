@@ -31,7 +31,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
         </Routes>
         
-        <footer className="py-6 text-center text-sm text-muted-foreground">
+        <footer className="py-6 text-center text-sm text-muted-foreground border-t border-border">
           © {new Date().getFullYear()} RacketAI.
         </footer>
       </Router>
