@@ -4,7 +4,7 @@ const labelClassName = "pt-4 pb-2 text-md font-medium";
 function CoverLetter() {
     return (
         <div className="mx-15 mt-7 mb-10">
-            <div className="pb-5 text-center">
+            <div className="pb-8 text-center">
                 <h1 className="pb-1 text-3xl font-bold">AI Cover Letter Generator</h1>
                 <p className="text-md text-muted-foreground">
                     Give the role details, pick a tone, and edit the result until it sounds like you.
