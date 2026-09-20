@@ -38,16 +38,8 @@ function Header() {
 
                     <div className="flex items-center gap-1">
                         <Link
-                            to="/login"
-                            aria-label="Login"
-                            className="hidden min-[590px]:block px-3 py-2 font-medium text-muted-foreground hover:bg-muted-foreground/10 transition"
-                        >
-                            Log In
-                        </Link>
-
-                        <Link
-                            to="/signup"
-                            aria-label="Signup"
+                            to="/analyse-cv"
+                            aria-label="Analyse CV"
                             className="hidden min-[590px]:block ml-1 px-3 py-2 font-medium border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition"
                         >
                             Get Started
