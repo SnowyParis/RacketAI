@@ -45,9 +45,9 @@ function Card({ title, subtitle }) {
                 </div>
 
                 <div className="px-5 py-3 flex gap-3 border-t border-border">
-                    <a href="#" className="flex px-2 py-1 gap-2 justify-center items-center text-primary-foreground bg-success border-2 border-foreground hover:bg-success/90"><Check size={15} /> <span>Accept</span></a>
-                    <a href="#" className="flex px-2 py-1 gap-2 justify-center items-center text-foreground border-2 border-muted-foreground hover:bg-muted-foreground/20"><Pencil size={15} /> <span>Edit</span></a>
-                    <a href="#" className="flex px-2 py-1 gap-2 justify-center items-center text-muted-foreground hover:bg-muted-foreground/10"><X size={15} /> <span>Reject</span></a>
+                    <a href="#" className="flex px-2 py-1 gap-2 items-center text-primary-foreground bg-success border-2 border-foreground hover:bg-success/90"><Check size={15} /> <span>Accept</span></a>
+                    <a href="#" className="flex px-2 py-1 gap-2 items-center text-foreground border-2 border-muted-foreground hover:bg-muted-foreground/20"><Pencil size={15} /> <span>Edit</span></a>
+                    <a href="#" className="flex px-2 py-1 gap-2 items-center text-muted-foreground hover:bg-muted-foreground/10"><X size={15} /> <span>Reject</span></a>
                 </div>
             </div>
         </div>
