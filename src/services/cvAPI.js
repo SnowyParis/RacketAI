@@ -45,31 +45,31 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5";
 //   }
 // };
 
+// export const getCurrentWeather = async (city) => {
 
+const openai = new OpenAI(API_KEY);
 
-const openai = new OpenAI();
-
-async function askAI(prompt) {
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
-    },
-    // {
-    //     headers: {
-    //         "Authorization" : `Bearer ${API_KEY}`,
-    //         "Content-Type" : "application/json",
-    //     }
-    // }
-);
+// export const askAI = async (prompt) => {
+//   try {
+//     const response = await openai.chat.completions.create({
+//       model: "gpt-4o-mini",
+//       messages: [{ role: "user", content: prompt }],
+//     },
+//     // {
+//     //     headers: {
+//     //         "Authorization" : `Bearer ${API_KEY}`,
+//     //         "Content-Type" : "application/json",
+//     //     }
+//     // }
+// );
     
-    console.log(response.choices[0].message.content);
-  } catch (error) {
-    console.error("Error communicating with AI API:", error);
-  }
-}
+//     console.log(response.choices[0].message.content);
+//   } catch (error) {
+//     console.error("Error communicating with AI API:", error);
+//   }
+// }
 
-askAI("Give me a one-sentence tagline for a coffee shop.");
+// askAI("Give me a one-sentence tagline for a coffee shop.");
 
 // import OpenAI from "openai";
 

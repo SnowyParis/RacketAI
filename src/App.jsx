@@ -11,10 +11,10 @@ import Works from "./pages/Works.jsx";
 import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import { useState } from 'react';
-import {askAI} from "./services/cvAPI.js";
+// import {askAI} from "./services/cvAPI.js";
 
 function App() {
-  askAI("Give me a one-sentence tagline for a coffee shop.");
+  // askAI("Give me a one-sentence tagline for a coffee shop.");
 
   return (
     <>
