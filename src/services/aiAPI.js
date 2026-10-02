@@ -1,46 +1,20 @@
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
+import axios from "axios";
 
-// export const getCurrentWeather = async (city) => {
-//   try {
-//     const response = await fetch(
-//       `${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`,
-//     ); //fetch the data from the API
+const API = axios.create({
+  baseURL: "http://localhost:5000/api/ai",
+});
 
-//     if (!response.ok) //response.ok is false
-//     {
-//       if (response.status === 404) {
-//         throw new Error(
-//           `${city} not found, please check the spelling and try again.`,
-//         );
-//       } else if (response.status === 401) {
-//         throw new Error(
-//           `Invalid API Key, please check your OpenWeatherMap API configuration.`,
-//         );
-//       } else {
-//         throw new Error(
-//           `Weather service is temporarily unavailable. Please try again later.`,
-//         );
-//       }
-//     }
+export const analyseCV = async (data) => {
+  const response = await API.post("/analyse", data);
+  return response.data;
+};
 
-//     const data = await response.json(); //destructure the data from the response
+export const tailorCV = async (data) => {
+  const response = await API.post("/tailor", data);
+  return response.data;
+};
 
-//     if (!data.dt) //if data.dt (i.e. timestamp) does not exist
-//     {
-//       data.dt = Math.floor(Date.now() / 1000);
-//     }
-
-//     return data;
-//   } catch (error) {
-//     if (error instanceof TypeError && error.message.includes("fetch")) {
-//       throw new Error(
-//         "Network error, please check your internet connection and try again.",
-//       );
-//     }
-
-//     throw error;
-//   }
-// };
-
-// export const getCurrentWeather = async (city) => {
-
+export const generateCoverLetter = async (data) => {
+  const response = await API.post("/cover-letter", data);
+  return response.data;
+};
