@@ -1,7 +1,23 @@
 import { Hammer, Upload, FileText, Trash, FileCheckCorner, PencilSparkles, FileSearch, Mail, LayoutGrid } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { analyseCV } from "../services/aiApi";
 
 function AnalyseCV() {
+    const [cvText, setCvText] = useState("");
+    const [jobDescription, setJobDescription] = useState("");
+    const [analysis, setAnalysis] = useState("");
+
+    const handleAnalyse = async () => {
+        try {
+            const result = await analyseCV({ cvText, jobDescription });
+            setAnalysis(result.analysis);
+            
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className="m-8">
             <div className="pb-8 text-center">
@@ -29,13 +45,16 @@ function AnalyseCV() {
 
                         <label class="block">
                             <span class="sr-only">Choose File</span>
-                            <input type="file" class="block w-full text-sm text-muted-foreground
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-md file:border
-                                file:text-sm file:font-semibold
-                              file:bg-blue-50 file:text-accent-foreground
-                              file:hover:bg-blue-100
-                                cursor-pointer"
+                            <input type="file" 
+                                value={cvText}
+                                onChange={(e) => setCvText(e.target.value)}
+                                class="block w-full text-sm text-muted-foreground
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-md file:border
+                                    file:text-sm file:font-semibold
+                                    file:bg-blue-50 file:text-accent-foreground
+                                    file:hover:bg-blue-100
+                                    cursor-pointer"
                             />
                         </label>
 
@@ -52,7 +71,11 @@ function AnalyseCV() {
 
                     <div className="m-5">
                         <span className="text-md font-display">Job Description</span>
-                        <textarea rows={10} placeholder="Paste the job description here..." className="mt-2 p-4 w-110 border border-input outline-none focus:ring-1 focus:ring-ring">
+                        <textarea rows={10} 
+                            placeholder="Paste the job description here..." 
+                            value={jobDescription}
+                            onChange={(e) => setJobDescription(e.target.value)}
+                            className="mt-2 p-4 w-110 border border-input outline-none focus:ring-1 focus:ring-ring">
                         </textarea>
                     </div>
                 </div>

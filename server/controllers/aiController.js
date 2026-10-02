@@ -7,11 +7,14 @@ const analyseCV = async (req, res) => {
     const prompt = `You are a professional ATS recruiter.
                     Analyse this CV against the job description.
 
-                    Return:
-                    1. Match Score (/100)
-                    2. Key Strengths
-                    3. Missing Skills
-                    4. Recommendations
+                    Return ONLY valid JSON.
+
+                    {
+                        "matchScore": number,
+                        "strengths": [],
+                        "missingSkills": [],
+                        "recommendations": []
+                    }
 
                     CV:
                     ${cvText}
@@ -58,16 +61,14 @@ const generateCoverLetter = async (req, res) => {
 
     const response = await generateContent(prompt);
 
-    res.json({
-      success: true,
-      coverLetter: response,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+    const cleaned = response
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
+
+    const analysis = JSON.parse(cleaned);
+
+    res.json(analysis);
 };
 
 const tailorCV = async (req, res) => {
