@@ -1,7 +1,7 @@
 import { Hammer, Upload, FileText, Trash, FileCheckCorner, PencilSparkles, FileSearch, Mail, LayoutGrid } from "lucide-react";
+import { analyseCV } from "../services/aiApi";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { analyseCV } from "../services/aiApi";
 
 function AnalyseCV() {
     const [cvText, setCvText] = useState("");

@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { generateCoverLetter } from "../services/aiApi";
+import { useState } from "react";
 
 const inputClassName = "p-2 w-full border border-input outline-none focus:ring-1 focus:ring-ring"
 const labelClassName = "pt-4 pb-2 text-md font-medium";
@@ -8,14 +8,14 @@ function CoverLetter() {
     const [coverLetter, setCoverLetter] = useState("");
 
     const handleGenerate = async () => {
-    const result = await generateCoverLetter({
-        jobTitle,
-        company,
-        hiringManager,
-        tone,
-        additionalInfo,
-        cvText,
-    });
+        const result = await generateCoverLetter({
+            jobTitle,
+            company,
+            hiringManager,
+            tone,
+            additionalInfo,
+            cvText,
+        }); //fetch response from the API
 
         setCoverLetter(result.coverLetter);
     };

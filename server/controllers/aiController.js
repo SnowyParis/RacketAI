@@ -1,8 +1,10 @@
+const { extractTextFromFile } = require("../services/fileParser");
 const { generateContent } = require("../services/geminiService");
 
 const analyseCV = async (req, res) => {
   try {
-    const { cvText, jobDescription } = req.body;
+    const { jobDescription } = req.body;
+    const cvText = await extractTextFromFile(req.file);
 
     const prompt = `You are a professional ATS recruiter.
                     Analyse this CV against the job description.
@@ -24,17 +26,28 @@ const analyseCV = async (req, res) => {
 
     const response = await generateContent(prompt);
 
+    const cleaned = response.replace(/```json/g, "")
+                            .replace(/```/g, "")
+                            .trim();
+
+    const analysis = JSON.parse(cleaned);
+
     res.json({
-      success: true,
-      analysis: response,
+        success: true,
+        cvText,
+        analysis,
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+
+    } catch (error) {
+        console.error(error);
+        
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
+
 
 const generateCoverLetter = async (req, res) => {
   try {
@@ -44,8 +57,9 @@ const generateCoverLetter = async (req, res) => {
       hiringManager,
       tone,
       additionalInfo,
-      cvText,
     } = req.body;
+
+    const cvText = await extractTextFromFile(req.file);
 
     const prompt = `Create a ${tone} cover letter.
 
@@ -53,7 +67,7 @@ const generateCoverLetter = async (req, res) => {
                     Company: ${company}
                     Hiring Manager: ${hiringManager}
 
-                    CV:
+                    Candidate CV:
                     ${cvText}
 
                     Additional Information:
@@ -61,27 +75,35 @@ const generateCoverLetter = async (req, res) => {
 
     const response = await generateContent(prompt);
 
-    const cleaned = response
-    .replace(/```json/g, "")
-    .replace(/```/g, "")
-    .trim();
+    res.json({
+        success: true,
+        response,
+    });
 
-    const analysis = JSON.parse(cleaned);
-
-    res.json(analysis);
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
+
 
 const tailorCV = async (req, res) => {
   try {
-    const { cvText, jobDescription } = req.body;
+    const { jobDescription } = req.body;
+    const cvText = await extractTextFromFile(req.file);
 
-    const prompt = `Rewrite and optimise this CV for the supplied job description.
+    const prompt = `Rewrite and optimise this CV for the supplied job description for ATS optimisation.
 
-                    Return:
-                    - Professional Summary
-                    - Skills Section
-                    - Experience Improvements
-                    - ATS Keywords
+                    Return valid JSON:
+
+                    {
+                        "summary":"",
+                        "skills":[],
+                        "experienceImprovements":[],
+                        "keywords":[]
+                    }
 
                     CV:
                     ${cvText}
@@ -91,16 +113,23 @@ const tailorCV = async (req, res) => {
 
     const response = await generateContent(prompt);
 
+    const cleaned = response.replace(/```json/g, "")
+                    .replace(/```/g, "")
+                    .trim();
+
+    const tailored = JSON.parse(cleaned);
+
     res.json({
-      success: true,
-      tailoredCV: response,
+        success: true,
+        tailored,
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
+
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
 };
 
 module.exports = {

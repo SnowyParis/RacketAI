@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const upload = require("../middleware/uploadMiddleware");
 
 const {
   analyseCV,
@@ -7,7 +8,11 @@ const {
   generateCoverLetter,
 } = require("../controllers/aiController");
 
-router.post("/analyse", analyseCV);
+router.post(
+  "/analyse",
+  upload.single("cv"),
+  analyseCV
+);
 
 router.post("/tailor", tailorCV);
 

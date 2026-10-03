@@ -1,8 +1,26 @@
 import { Check, Pencil, X } from "lucide-react";
+import { tailoredCV } from "../services/aiApi";
+import { useState } from "react";
 
 const inputClassName = "p-2 w-45% border border-input outline-none focus:ring-1 focus:ring-ring"
 
 function TailoredCV() {
+    const [professionalText, setProfessionalText] = useState("");
+    const [technicalText, setTechnicalText] = useState("");
+    const [experienceText, setExperienceText] = useState("");
+    const [projectsText, setProjectsText] = useState("");
+    const [educationText, setEducationText] = useState("");
+
+    const handleTailoring = async () => {
+        try {
+            const result = await tailoredCV({ cvText, jobDescription });
+            setAnalysis(result.analysis);
+            
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className="mx-15 mt-7 mb-10">
             <div className="pb-8 text-center">

@@ -25,6 +25,7 @@ const extractTextFromFile = async (file) => {
     }
 
     return text;
+    
   } catch (error) {
     throw new Error("Failed to parse file");
   }
