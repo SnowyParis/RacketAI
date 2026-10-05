@@ -1,5 +1,5 @@
 import { Check, Pencil, X } from "lucide-react";
-import { tailoredCV } from "../services/aiApi";
+import { tailorCV } from "../services/aiApi";
 import { useState } from "react";
 
 const inputClassName = "p-2 w-45% border border-input outline-none focus:ring-1 focus:ring-ring"
@@ -13,7 +13,7 @@ function TailoredCV() {
 
     const handleTailoring = async () => {
         try {
-            const result = await tailoredCV({ cvText, jobDescription });
+            const result = await tailorCV({ cvText, jobDescription });
             setAnalysis(result.analysis);
             
         } catch (error) {

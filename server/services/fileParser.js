@@ -1,36 +1,46 @@
-const pdf = require("pdf-parse");
+const pdfParse = require("pdf-parse");
 const mammoth = require("mammoth");
+const fs = require("fs");
 
-const extractTextFromFile = async (file) => {
+async function parseFile(file) {
+  if (!file) {
+    throw new Error("No file was uploaded.");
+  }
+
+  const fileExtension = file.originalname.split(".")
+    .pop()
+    .toLowerCase();
+
   try {
-    if (!file) {
-      throw new Error("No file uploaded");
+    // PDF
+    if (fileExtension === "pdf") {
+      const dataBuffer = fs.readFileSync(file.path);
+
+      const data = await pdfParse(dataBuffer);
+
+      return data.text.trim();
     }
 
-    let text = "";
-
-    if (file.mimetype === "application/pdf") {
-      const pdfData = await pdf(file.buffer);
-      text = pdfData.text;
-    }
-    else if (
-      file.mimetype ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    ) {
+    // DOCX
+    if (fileExtension === "docx") {
       const result = await mammoth.extractRawText({
-        buffer: file.buffer,
+        path: file.path,
       });
 
-      text = result.value;
+      return result.value.trim();
     }
 
-    return text;
-    
-  } catch (error) {
-    throw new Error("Failed to parse file");
+    throw new Error(
+      "Unsupported file type. Please upload a PDF or DOCX file."
+    );
+  } finally {
+    // Delete uploaded file after parsing
+    if (fs.existsSync(file.path)) {
+      fs.unlinkSync(file.path);
+    }
   }
-};
+}
 
 module.exports = {
-  extractTextFromFile,
+  parseFile,
 };

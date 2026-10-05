@@ -5,11 +5,12 @@ const API = axios.create({
 });
 
 //send data to the server
-export const analyseCV = async (data) => {
+export const analyseCV = async ({ cvFile, jobDescription }) => {
   const formData = new FormData();
     
   formData.append("cv", cvFile);
   formData.append("jobDescription", jobDescription);
+
   //a post request is made using axios.post to send the data to the API
   //pass the payload object as the second argument
   const response = await API.post("/analyse", formData,
@@ -17,7 +18,8 @@ export const analyseCV = async (data) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-});
+  });
+  
   //the response is either the data being requested or an error
   return response.data;
 };

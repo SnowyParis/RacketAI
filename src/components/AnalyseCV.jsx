@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function AnalyseCV() {
-    const [cvText, setCvText] = useState("");
+    const [cv, setCv] = useState("");
     const [jobDescription, setJobDescription] = useState("");
     const [analysis, setAnalysis] = useState("");
 
     const handleAnalyse = async () => {
         try {
-            const result = await analyseCV({ cvText, jobDescription });
+            const result = await analyseCV({ cv, jobDescription });
             setAnalysis(result.analysis);
             
         } catch (error) {
@@ -46,8 +46,8 @@ function AnalyseCV() {
                         <label class="block">
                             <span class="sr-only">Choose File</span>
                             <input type="file" 
-                                value={cvText}
-                                onChange={(e) => setCvText(e.target.value)}
+                                value={cv}
+                                onChange={(e) => setCv(e.target.value)}
                                 class="block w-full text-sm text-muted-foreground
                                     file:mr-4 file:py-2 file:px-4
                                     file:rounded-md file:border
@@ -81,14 +81,19 @@ function AnalyseCV() {
                 </div>
             </div>
 
-            <div className="mt-6 flex justify-center">
-                <Link
-                    to="/analyse-cv"
-                    aria-label="Analyse my CV"
-                    className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
-                    Analyse my CV
-                </Link>
-            </div >
+            {analysis ?
+                <div></div>
+                :
+                <div className="mt-6 flex justify-center">
+                    <Link
+                        to="/analyse-cv"
+                        aria-label="Analyse my CV"
+                        onClick={handleAnalyse()}
+                        className="font-medium w-35 mt-4 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
+                        Analyse my CV
+                    </Link>
+                </div>
+            }
         </div >
     );
 }

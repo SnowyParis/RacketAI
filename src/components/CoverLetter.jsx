@@ -14,7 +14,7 @@ function CoverLetter() {
             hiringManager,
             tone,
             additionalInfo,
-            cvText,
+            cvText, //
         }); //fetch response from the API
 
         setCoverLetter(result.coverLetter);
@@ -69,6 +69,7 @@ function CoverLetter() {
                                     href="#"
                                     type="submit"
                                     aria-label="Generate Cover Letter"
+                                    onClick={handleGenerate()}
                                     className="font-medium w-48 mt-4 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
                                     Generate Cover Letter
                                 </a>
@@ -84,6 +85,10 @@ function CoverLetter() {
 
                     <div className="flex flex-col gap-4 p-5 items-center">
                         <div>
+                            {coverLetter &&
+                            (<textarea rows={6} value={coverLetter} placeholder="Anything specific you want mentioned such as availability, relocation, a referral, etc." className={inputClassName}>
+                            </textarea>)}
+                            
                             <h3 className="pb-1 text-xl text-center font-medium">No cover letter yet</h3>
                             <p className="text-md text-center text-muted-foreground">Fill in the role details on the left and generate a first draft you can edit.</p>
                         </div>
@@ -92,6 +97,7 @@ function CoverLetter() {
                             // to="/analyse-cv"
                             href="#"
                             aria-label="Generate Cover Letter"
+                            onClick={handleGenerate()}
                             className="font-medium w-48 mt-4 px-3 py-2 border-2 border-secondary-foreground hover:bg-muted-foreground/10 transition">
                             Generate Cover Letter
                         </a>

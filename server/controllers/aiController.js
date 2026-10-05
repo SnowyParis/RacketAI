@@ -1,10 +1,10 @@
-const { extractTextFromFile } = require("../services/fileParser");
+const { parseFile } = require("../services/fileParser");
 const { generateContent } = require("../services/geminiService");
 
 const analyseCV = async (req, res) => {
   try {
     const { jobDescription } = req.body;
-    const cvText = await extractTextFromFile(req.file);
+    const cvText = await parseFile(req.file);
 
     const prompt = `You are a professional ATS recruiter.
                     Analyse this CV against the job description.
@@ -59,7 +59,7 @@ const generateCoverLetter = async (req, res) => {
       additionalInfo,
     } = req.body;
 
-    const cvText = await extractTextFromFile(req.file);
+    const cvText = await parseFile(req.file);
 
     const prompt = `Create a ${tone} cover letter.
 
@@ -92,7 +92,7 @@ const generateCoverLetter = async (req, res) => {
 const tailorCV = async (req, res) => {
   try {
     const { jobDescription } = req.body;
-    const cvText = await extractTextFromFile(req.file);
+    const cvText = await parseFile(req.file);
 
     const prompt = `Rewrite and optimise this CV for the supplied job description for ATS optimisation.
 
