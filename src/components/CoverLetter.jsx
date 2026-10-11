@@ -1,4 +1,4 @@
-import { generateCoverLetter } from "../services/aiApi";
+import { generateCoverLetter } from "../services/aiAPI.js";
 import { useState } from "react";
 
 const inputClassName = "p-2 w-full border border-input outline-none focus:ring-1 focus:ring-ring"
@@ -85,16 +85,23 @@ function CoverLetter() {
 
                     <div className="flex flex-col gap-4 p-5 items-center">
                         <div>
-                            {coverLetter &&
-                            (<textarea rows={6} value={coverLetter} placeholder="Anything specific you want mentioned such as availability, relocation, a referral, etc." className={inputClassName}>
-                            </textarea>)}
-                            
-                            <h3 className="pb-1 text-xl text-center font-medium">No cover letter yet</h3>
-                            <p className="text-md text-center text-muted-foreground">Fill in the role details on the left and generate a first draft you can edit.</p>
+                            {coverLetter ?
+                                <div className="m-5">
+                                    <span className="text-md font-display">Cover Letter</span>
+                                    <textarea rows={10}
+                                        value={coverLetter}
+                                        className="mt-2 p-4 w-110 border border-input outline-none focus:ring-1 focus:ring-ring">
+                                    </textarea>
+                                </div>
+                                :
+                                <div>
+                                    <h3 className="pb-1 text-xl text-center font-medium">No cover letter yet</h3>
+                                    <p className="text-md text-center text-muted-foreground">Fill in the role details on the left and generate a first draft you can edit.</p>
+                                </div>
+                            }
                         </div>
 
                         <a
-                            // to="/analyse-cv"
                             href="#"
                             aria-label="Generate Cover Letter"
                             onClick={handleGenerate()}
