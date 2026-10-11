@@ -7,9 +7,7 @@ async function parseFile(file) {
     throw new Error("No file was uploaded.");
   }
 
-  const fileExtension = file.originalname.split(".")
-    .pop()
-    .toLowerCase();
+  const fileExtension = file.originalname.split(".").pop().toLowerCase();
 
   try {
     // PDF
@@ -30,9 +28,7 @@ async function parseFile(file) {
       return result.value.trim();
     }
 
-    throw new Error(
-      "Unsupported file type. Please upload a PDF or DOCX file."
-    );
+    throw new Error("Unsupported file type. Please upload a PDF or DOCX file.");
   } finally {
     // Delete uploaded file after parsing
     if (fs.existsSync(file.path)) {

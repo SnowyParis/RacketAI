@@ -1,139 +1,136 @@
 const { parseFile } = require("../services/fileParser");
-const { generateContent } = require("../services/geminiService");
 
-const analyseCV = async (req, res) => {
+const {
+  analyseCV,
+  generateTailoredCV,
+  generateCoverLetter,
+} = require("../services/geminiService");
+
+async function analyseCVController(req, res) {
   try {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Please upload a CV.",
+      });
+    }
+
     const { jobDescription } = req.body;
+
+    if (!jobDescription?.trim()) {
+      return res.status(400).json({
+        message: "Please provide a job description.",
+      });
+    }
+
+    // Parse uploaded CV
     const cvText = await parseFile(req.file);
 
-    const prompt = `You are a professional ATS recruiter.
-                    Analyse this CV against the job description.
-
-                    Return ONLY valid JSON.
-
-                    {
-                        "matchScore": number,
-                        "strengths": [],
-                        "missingSkills": [],
-                        "recommendations": []
-                    }
-
-                    CV:
-                    ${cvText}
-
-                    Job Description:
-                    ${jobDescription}`;
-
-    const response = await generateContent(prompt);
-
-    const cleaned = response.replace(/```json/g, "")
-                            .replace(/```/g, "")
-                            .trim();
-
-    const analysis = JSON.parse(cleaned);
-
-    res.json({
-        success: true,
-        cvText,
-        analysis,
-    });
-
-    } catch (error) {
-        console.error(error);
-        
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+    if (!cvText) {
+      return res.status(400).json({
+        message:
+          "Could not extract text from the uploaded CV.",
+      });
     }
-};
 
+    // Send CV + job description to Gemini
+    const analysis = await analyseCV(
+      cvText,
+      jobDescription
+    );
 
-const generateCoverLetter = async (req, res) => {
-  try {
-    const {
-      jobTitle,
-      company,
-      hiringManager,
-      tone,
-      additionalInfo,
-    } = req.body;
-
-    const cvText = await parseFile(req.file);
-
-    const prompt = `Create a ${tone} cover letter.
-
-                    Job Title: ${jobTitle}
-                    Company: ${company}
-                    Hiring Manager: ${hiringManager}
-
-                    Candidate CV:
-                    ${cvText}
-
-                    Additional Information:
-                    ${additionalInfo}`;
-
-    const response = await generateContent(prompt);
-
-    res.json({
-        success: true,
-        response,
+    return res.status(200).json({
+      success: true,
+      data: analysis,
     });
+  } catch (error) {
+    console.error("CV analysis error:", error);
 
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
-    }
-};
+    return res.status(500).json({
+      success: false,
+      message:
+        error.response?.data?.error?.message ||
+        error.message ||
+        "Something went wrong.",
+    });
+  }
+}
 
-
-const tailorCV = async (req, res) => {
+async function tailoredCVController(req, res) {
   try {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Please upload a CV.",
+      });
+    }
+
     const { jobDescription } = req.body;
+
+    if (!jobDescription?.trim()) {
+      return res.status(400).json({
+        message: "Please provide a job description.",
+      });
+    }
+
     const cvText = await parseFile(req.file);
 
-    const prompt = `Rewrite and optimise this CV for the supplied job description for ATS optimisation.
-
-                    Return valid JSON:
-
-                    {
-                        "summary":"",
-                        "skills":[],
-                        "experienceImprovements":[],
-                        "keywords":[]
-                    }
-
-                    CV:
-                    ${cvText}
-
-                    JOB DESCRIPTION:
-                    ${jobDescription}`;
-
-    const response = await generateContent(prompt);
-
-    const cleaned = response.replace(/```json/g, "")
-                    .replace(/```/g, "")
-                    .trim();
-
-    const tailored = JSON.parse(cleaned);
+    const tailoredCV = await generateTailoredCV(
+      cvText,
+      jobDescription
+    );
 
     res.json({
-        success: true,
-        tailored,
+      success: true,
+      data: tailoredCV,
     });
+  } catch (error) {
+    console.error(error);
 
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+async function coverLetterController(req, res) {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        message: "Please upload a CV.",
+      });
     }
-};
+
+    const { jobDescription } = req.body;
+
+    if (!jobDescription?.trim()) {
+      return res.status(400).json({
+        message: "Please provide a job description.",
+      });
+    }
+
+    const cvText = await parseFile(req.file);
+
+    const coverLetter = await generateCoverLetter(
+      cvText,
+      jobDescription
+    );
+
+    res.json({
+      success: true,
+      data: coverLetter,
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
 
 module.exports = {
-  analyseCV,
-  generateCoverLetter,
-  tailorCV,
+  analyseCVController,
+  tailoredCVController,
+  coverLetterController,
 };

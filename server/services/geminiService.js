@@ -1,20 +1,176 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const axios = require("axios");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
-});
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
-const generateContent = async (prompt) => {
-  try {
-    const result = await model.generateContent(prompt);
-    return result.response.text();
-    
-  } catch (error) {
-    console.error("Gemini Error:", error);
-    throw new Error("Failed to generate content");
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+
+async function generateGeminiResponse(prompt) {
+  if (!GEMINI_API_KEY) {
+    throw new Error("GEMINI_API_KEY is not configured.");
   }
-};
 
-module.exports = { generateContent };
+  const response = await axios.post(
+    `${GEMINI_URL}?key=${GEMINI_API_KEY}`,
+    {
+      contents: [
+        {
+          parts: [
+            {
+              text: prompt,
+            },
+          ],
+        },
+      ],
+
+      generationConfig: {
+        temperature: 0.2,
+        responseMimeType: "application/json",
+      },
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+
+  const text = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+  if (!text) {
+    throw new Error("Gemini returned an empty response.");
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    console.error("Gemini response:", text);
+
+    throw new Error("Gemini returned invalid JSON.");
+  }
+}
+
+async function analyseCV(cvText, jobDescription) {
+  const prompt = `
+You are an expert recruitment and CV analysis assistant.
+
+Analyse the candidate's CV against the provided job description.
+
+CANDIDATE CV:
+----------------
+${cvText}
+----------------
+
+JOB DESCRIPTION:
+----------------
+${jobDescription}
+----------------
+
+Return ONLY valid JSON using exactly this structure:
+
+{
+  "matchScore": 0,
+  "summary": "",
+  "strongSkills": [],
+  "missingSkills": [],
+  "recommendations": [
+    {
+      "title": "",
+      "description": "",
+      "priority": "High"
+    }
+  ],
+  "experienceMatch": "",
+  "educationMatch": "",
+  "keywordMatch": [],
+  "atsSuggestions": []
+}
+
+Rules:
+
+1. matchScore must be a number from 0 to 100.
+2. strongSkills must contain skills explicitly supported by the CV.
+3. missingSkills must contain skills required or strongly preferred by the job description that are not clearly demonstrated in the CV.
+4. Do not invent qualifications, experience or skills.
+5. recommendations should be practical and specific.
+6. atsSuggestions should explain how the CV could better match the job description.
+7. Keep the analysis professional and useful for a job applicant.
+8. Return JSON only.
+`;
+
+  return generateGeminiResponse(prompt);
+}
+
+async function generateTailoredCV(cvText, jobDescription) {
+  const prompt = `
+You are an expert CV writer.
+
+Create a tailored CV based ONLY on the candidate's existing CV and the job description.
+
+CANDIDATE CV:
+----------------
+${cvText}
+----------------
+
+JOB DESCRIPTION:
+----------------
+${jobDescription}
+----------------
+
+Do not invent experience, qualifications, employers, projects or skills.
+
+Return ONLY JSON:
+
+{
+  "professionalSummary": "",
+  "skills": [],
+  "experience": [
+    {
+      "jobTitle": "",
+      "company": "",
+      "description": []
+    }
+  ],
+  "education": [],
+  "projects": [],
+  "additionalSections": []
+}
+`;
+
+  return generateGeminiResponse(prompt);
+}
+
+async function generateCoverLetter(cvText, jobDescription) {
+  const prompt = `
+You are a professional recruitment writer.
+
+Write a tailored cover letter using the candidate's CV and the job description.
+
+CANDIDATE CV:
+----------------
+${cvText}
+----------------
+
+JOB DESCRIPTION:
+----------------
+${jobDescription}
+----------------
+
+Do not invent information.
+
+Return ONLY JSON:
+
+{
+  "coverLetter": ""
+}
+`;
+
+  return generateGeminiResponse(prompt);
+}
+
+module.exports = {
+  analyseCV,
+  generateTailoredCV,
+  generateCoverLetter,
+};
