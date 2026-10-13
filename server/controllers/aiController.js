@@ -55,6 +55,7 @@ async function analyseCVController(req, res) {
   }
 }
 
+
 async function tailoredCVController(req, res) {
   try {
     if (!req.file) {
@@ -92,39 +93,93 @@ async function tailoredCVController(req, res) {
   }
 }
 
+
 async function coverLetterController(req, res) {
+  let cvText = "";
+
   try {
-    if (!req.file) {
+    const {
+      jobTitle,
+      company,
+      hiringManager,
+      tone,
+      additionalInfo,
+      useCVAnalysis,
+      cvAnalysis: rawCVAnalysis,
+    } = req.body;
+
+    if (!jobTitle?.trim() || !company?.trim()) {
       return res.status(400).json({
-        message: "Please upload a CV.",
+        success: false,
+        message: "Job title and company are required.",
       });
     }
 
-    const { jobDescription } = req.body;
+    let cvAnalysis = null;
 
-    if (!jobDescription?.trim()) {
+    if (useCVAnalysis === "true") {
+      if (!rawCVAnalysis) {
+        return res.status(400).json({
+          success: false,
+          message: "No saved CV analysis was provided.",
+        });
+      }
+
+      try {
+        cvAnalysis = JSON.parse(rawCVAnalysis);
+      } catch {
+        return res.status(400).json({
+          success: false,
+          message: "The saved CV analysis is invalid.",
+        });
+      }
+    }
+
+    // A separate CV upload is optional.
+    if (req.file) {
+      cvText = await parseFile(req.file);
+    }
+
+    if (!cvText && !cvAnalysis) {
       return res.status(400).json({
-        message: "Please provide a job description.",
+        success: false,
+        message:
+          "Upload a CV or select a saved CV analysis to personalise your letter.",
       });
     }
 
-    const cvText = await parseFile(req.file);
-
-    const coverLetter = await generateCoverLetter(
+    const result = await generateCoverLetter({
       cvText,
-      jobDescription
-    );
+      cvAnalysis,
+      jobTitle: jobTitle.trim(),
+      company: company.trim(),
+      hiringManager: hiringManager?.trim() || "",
+      tone: tone || "Professional",
+      additionalInfo: additionalInfo?.trim() || "",
+    });
 
-    res.json({
+    if (!result.coverLetter) {
+      return res.status(502).json({
+        success: false,
+        message: "The AI did not return a cover letter.",
+      });
+    }
+
+    return res.status(200).json({
       success: true,
-      data: coverLetter,
+      data: result,
     });
   } catch (error) {
-    console.error(error);
+    console.error(
+      "Cover letter generation error:",
+      error.response?.data || error.message
+    );
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: error.message,
+      message:
+        error.response?.data?.error?.message ||
+        "Unable to generate the cover letter. Please try again.",
     });
   }
 }

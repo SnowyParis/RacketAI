@@ -51,6 +51,7 @@ async function generateGeminiResponse(prompt) {
   }
 }
 
+
 async function analyseCV(cvText, jobDescription) {
   const prompt = `
 You are an expert recruitment and CV analysis assistant.
@@ -96,11 +97,11 @@ Rules:
 5. recommendations should be practical and specific.
 6. atsSuggestions should explain how the CV could better match the job description.
 7. Keep the analysis professional and useful for a job applicant.
-8. Return JSON only.
-`;
+8. Return JSON only.`;
 
   return generateGeminiResponse(prompt);
 }
+
 
 async function generateTailoredCV(cvText, jobDescription) {
   const prompt = `
@@ -135,39 +136,72 @@ Return ONLY JSON:
   "education": [],
   "projects": [],
   "additionalSections": []
-}
-`;
+}`;
 
   return generateGeminiResponse(prompt);
 }
 
-async function generateCoverLetter(cvText, jobDescription) {
+
+
+async function generateCoverLetter({
+  cvText = "",
+  cvAnalysis = null,
+  jobTitle,
+  company,
+  hiringManager = "",
+  tone = "Professional",
+  additionalInfo = "",
+}) {
   const prompt = `
-You are a professional recruitment writer.
+  You are a professional career-writing assistant.
 
-Write a tailored cover letter using the candidate's CV and the job description.
+  Write a tailored cover letter for the candidate.
 
-CANDIDATE CV:
-----------------
-${cvText}
-----------------
+  JOB TITLE:
+  ${jobTitle}
 
-JOB DESCRIPTION:
-----------------
-${jobDescription}
-----------------
+  COMPANY:
+  ${company}
 
-Do not invent information.
+  HIRING MANAGER:
+  ${hiringManager || "Not provided"}
 
-Return ONLY JSON:
+  TONE:
+  ${tone}
 
-{
-  "coverLetter": ""
-}
-`;
+  ADDITIONAL INFORMATION:
+  ${additionalInfo || "None provided"}
+
+  EXTRACTED CV:
+  ${cvText || "No CV uploaded"}
+
+  PREVIOUS CV ANALYSIS:
+  ${cvAnalysis ? JSON.stringify(cvAnalysis) : "Not provided"}
+
+  INSTRUCTIONS:
+
+  1. Address the hiring manager by name when supplied.
+    Otherwise, use "Dear Hiring Manager".
+  2. Use the requested tone throughout the letter.
+  3. Explain why the candidate is interested in the role and company,
+    using only information supported by the supplied context.
+  4. Highlight relevant skills, qualifications, projects and experience.
+  5. Include the additional information naturally where appropriate.
+  6. Do not invent qualifications, work experience, achievements,
+    company facts, or personal details.
+  7. If information is missing, use general but truthful wording.
+  8. Do not include fabricated contact details or dates.
+  9. Produce a polished letter with a greeting, opening paragraph,
+    relevant body paragraphs, closing paragraph and sign-off.
+  10. Return ONLY valid JSON in this format:
+
+  {
+    "coverLetter": "Complete cover letter text"
+  }`;
 
   return generateGeminiResponse(prompt);
 }
+
 
 module.exports = {
   analyseCV,

@@ -4,81 +4,70 @@ const API = axios.create({
   baseURL: "http://localhost:5000/api",
 });
 
-export async function analyseCV(
-  cvFile,
-  jobDescription
-) {
+export async function analyseCV(cvFile, jobDescription) {
   const formData = new FormData();
 
   formData.append("cv", cvFile);
-  formData.append(
-    "jobDescription",
-    jobDescription
-  );
+  formData.append("jobDescription", jobDescription);
 
-  const response = await API.post(
-    "/ai/analyse",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const response = await API.post("/ai/analyse", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
   return response.data;
 }
 
-export async function generateTailoredCV(
-  cvFile,
-  jobDescription
-) {
+export async function generateTailoredCV(cvFile, jobDescription) {
   const formData = new FormData();
 
   formData.append("cv", cvFile);
-  formData.append(
-    "jobDescription",
-    jobDescription
-  );
+  formData.append("jobDescription", jobDescription);
 
-  const response = await API.post(
-    "/ai/tailored-cv",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
+  const response = await API.post("/ai/tailored-cv", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
   return response.data;
 }
 
-export async function generateCoverLetter(
+export async function generateCoverLetter({
   cvFile,
-  jobDescription
-) {
+  jobTitle,
+  company,
+  hiringManager,
+  tone,
+  additionalInfo,
+  useCVAnalysis,
+  cvAnalysis,
+}) {
   const formData = new FormData();
 
-  formData.append("cv", cvFile);
-  formData.append(
-    "jobDescription",
-    jobDescription
-  );
+  formData.append("jobTitle", jobTitle);
+  formData.append("company", company);
+  formData.append("hiringManager", hiringManager || "");
+  formData.append("tone", tone);
+  formData.append("additionalInfo", additionalInfo || "");
+  formData.append("useCVAnalysis", String(useCVAnalysis));
 
-  const response = await API.post(
-    "/ai/cover-letter",
+  if (cvAnalysis) {
+    formData.append("cvAnalysis", JSON.stringify(cvAnalysis));
+  }
+
+  if (cvFile) {
+    formData.append("cv", cvFile);
+  }
+
+  const response = await axios.post(
+    "http://localhost:5000/api/ai/cover-letter",
     formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
   );
 
   return response.data;
 }
-
 
 // import axios from "axios";
 
@@ -89,7 +78,7 @@ export async function generateCoverLetter(
 // //send data to the server
 // export const analyseCV = async ({ cvFile, jobDescription }) => {
 //   const formData = new FormData();
-    
+
 //   formData.append("cv", cvFile);
 //   formData.append("jobDescription", jobDescription);
 
@@ -101,7 +90,7 @@ export async function generateCoverLetter(
 //       "Content-Type": "multipart/form-data",
 //     },
 //   });
-  
+
 //   //the response is either the data being requested or an error
 //   return response.data;
 // };
@@ -116,4 +105,3 @@ export async function generateCoverLetter(
 //   const response = await API.post("/cover-letter", data);
 //   return response.data;
 // };
-

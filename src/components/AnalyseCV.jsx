@@ -52,11 +52,17 @@ function AnalyseCV() {
             setAnalysis(null);
 
             const response = await analyseCV(
-                cvFile,
-                jobDescription
+            cvFile,
+            jobDescription
             );
 
             setAnalysis(response.data);
+
+            //saves the analysis for the current browser tab
+            sessionStorage.setItem(
+                "racketAIAnalysis",
+                JSON.stringify(response.data)
+            );
         } catch (error) {
             console.error(error);
 
@@ -68,16 +74,6 @@ function AnalyseCV() {
             setLoading(false);
         }
     }
-
-    // const handleAnalyse = async () => {
-    //     try {
-    //         const result = await analyseCV({ cv, jobDescription });
-    //         setAnalysis(result.analysis);
-
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // };
 
     return (
         <div className="m-8">
